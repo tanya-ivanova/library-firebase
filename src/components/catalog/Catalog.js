@@ -9,6 +9,7 @@ import styles from './Catalog.module.css';
 
 import { firebaseApp } from '../../firebase';
 import { getFirestore, collection, getDocs, query, startAfter, endBefore, limit, orderBy, limitToLast } from "firebase/firestore";
+import PagerFirebase from "../common/pager/PagerFirebase";
 const db = getFirestore(firebaseApp);
 
 const Catalog = () => {
@@ -19,13 +20,14 @@ const Catalog = () => {
 
     const [lastDoc, setLastDoc] = useState();
     const [firstDoc, setFirstDoc] = useState();
+    const [theVeryFirstDoc, setTheVeryFirstDoc] = useState();
     const [isEmpty, setIsEmpty] = useState(false);
     const [isBeginning, setIsBeginning] = useState(true);  
 
     useEffect(() => {
         const booksRef = collection(db, "books");
         
-        const qLimited = query(booksRef, orderBy('title'), limit(4));
+        const qLimited = query(booksRef, orderBy('title'), limit(6));
         getDocs(qLimited)
             .then((querySnapshot) => {
                 if (querySnapshot.size !== 0) {
@@ -33,6 +35,8 @@ const Catalog = () => {
                     const books = querySnapshot.docs.map(book => ({ ...book.data(), _id: book.id }));
                     setBooks(books);
 
+                    const theVeryFirstDoc = querySnapshot.docs[0];
+                    setTheVeryFirstDoc(theVeryFirstDoc);
                     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
                     setLastDoc(lastDoc);
                 } else {
@@ -51,7 +55,7 @@ const Catalog = () => {
     const fetchMore = () => {
         const booksRef = collection(db, "books");
 
-        const qLimited = query(booksRef, orderBy('title'), startAfter(lastDoc), limit(4));
+        const qLimited = query(booksRef, orderBy('title'), startAfter(lastDoc), limit(6));
         getDocs(qLimited)
             .then((querySnapshot) => {
                 if (querySnapshot.size !== 0) {
@@ -65,6 +69,10 @@ const Catalog = () => {
                     setLastDoc(lastDoc);
                     setFirstDoc(firstDoc);
                     setIsBeginning(false);
+
+                    if(querySnapshot.size < 6) {
+                        setIsEmpty(true);
+                    }
                 } else {
                     setIsEmpty(true);
                 }
@@ -80,7 +88,7 @@ const Catalog = () => {
     const fetchLess = () => {
         const booksRef = collection(db, "books");
 
-        const qLimited = query(booksRef, orderBy('title'), endBefore(firstDoc), limitToLast(4));
+        const qLimited = query(booksRef, orderBy('title'), endBefore(firstDoc), limitToLast(6));
         getDocs(qLimited)
             .then((querySnapshot) => {
                 if (querySnapshot.size !== 0) {
@@ -90,10 +98,14 @@ const Catalog = () => {
 
                     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
                     const firstDoc = querySnapshot.docs[querySnapshot.docs.length - querySnapshot.size];
-
+                    
                     setLastDoc(lastDoc);
                     setFirstDoc(firstDoc);
                     setIsEmpty(false);
+
+                    if(firstDoc.data().title === theVeryFirstDoc.data().title) {
+                        setIsBeginning(true);
+                    }
                 } else {
                     setIsBeginning(true);
                 }
@@ -115,23 +127,19 @@ const Catalog = () => {
     }
 
     return (
-        <>
+        <>            
             <section className={styles["catalog-page"]}>
                 {books.length > 0
                     ? books.map(x => <BookItem key={x._id} book={x} />)
                     : <h2 className="message-when-no-data">{languages.noBooksYet[language]}</h2>
                 }
             </section>
-            <div className={styles["pagination-section"]}>
-                <div>
-                    {!isBeginning && <button onClick={fetchLess}>Less books</button>}
-                    {isBeginning && <p>This is the beginning of the listing of the books</p>}
-                </div>
-                <div>
-                    {!isEmpty && <button onClick={fetchMore}>More books</button>}
-                    {isEmpty && <p>There are no more books</p>}
-                </div>
-            </div>
+            <PagerFirebase
+                isBeginning={isBeginning}
+                isEmpty={isEmpty}
+                fetchLess={fetchLess}
+                fetchMore={fetchMore}
+            />
         </>
     );
 };

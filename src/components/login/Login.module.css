@@ -1,0 +1,89 @@
+.login {
+    background-color: antiquewhite;
+}
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 80vh;       
+}
+
+.login-form {
+    padding-left: 50px;
+    padding-right: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #895D67;
+    border-radius: 10px;
+    margin: 40px;
+}
+
+.login h1 {
+    color: #29528B;
+    font-size: 32px;
+}
+
+.account-message {
+    font-size: 18px;
+    color: #A52D2D;
+}
+
+.login input {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 18px;    
+}
+
+.login label {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 18px;
+    margin-bottom: 8px;       
+    margin-top: 13px;
+    color: #A52D2D;
+}
+
+button {
+    color: #5992B7;
+    font-weight: bolder;
+    margin-top: 30px;
+    background-color: white;    
+    width: auto;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #895D67;
+    border-radius: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    color: #29528B;
+    background-color: #F2AF81;
+}
+
+.btn-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.button-disabled {
+    background-color: #d4d4d4;
+}
+
+.button-disabled:hover {
+    background-color: #d4d4d4;
+    color: #5992B7;
+}

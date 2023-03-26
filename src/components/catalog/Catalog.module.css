@@ -1,0 +1,21 @@
+.catalog-page {
+    background-color: antiquewhite;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;  
+    justify-content: center;  
+}
+
+.pagination-section {
+    background-color: antiquewhite;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;  
+    justify-content: center;
+}
+
+.pagination-section p {
+    color: #29528B;
+}

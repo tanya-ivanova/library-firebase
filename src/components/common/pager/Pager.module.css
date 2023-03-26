@@ -1,0 +1,8 @@
+.position-right {
+    display: flex;
+    justify-content: right;    
+}
+
+.numberOfPages {
+    padding: 10px;
+}

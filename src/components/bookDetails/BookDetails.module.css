@@ -1,0 +1,72 @@
+.details-page {
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 100px;    
+}
+
+.details-wrapper {
+    width: 960px;
+    color: #A52D2D;    
+}
+
+.details-wrapper h1 {
+    color: #29528B;
+}
+
+.details-wrapper p {
+    color: #895D67;
+    margin-bottom: 40px;
+}
+
+.buttons a,
+.btn-delete,
+.btn-like {
+    color: #5992B7;
+    font-weight: bolder;    
+    background-color: white;    
+    width: auto;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #895D67;
+    border-radius: 10px;
+    margin: 20px 20px 20px 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;    
+}
+
+.buttons a:hover,
+.btn-delete:hover,
+.btn-like:hover {
+    cursor: pointer;
+    color: #29528B;
+    background-color: #F2AF81;
+    border-color: #203973;
+}
+
+.image {
+    float: left;
+    margin-right: 30px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.author-paragraph {
+  margin-bottom: 20px;
+}
+
+.more-books-by-author {
+  color: blue;
+  cursor: pointer;
+}
+
+.more-books-by-author:hover {  
+  text-decoration: underline;
+}

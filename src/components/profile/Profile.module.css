@@ -1,0 +1,49 @@
+.profile-page {
+    background-color: antiquewhite;
+    display: flex;
+    flex-wrap: wrap;    
+    align-items: center;
+    text-align: center; 
+    justify-content: center;       
+}
+
+.book-item-wrapper {
+    margin: 100px;
+    display: inline-block;
+    color: #A52D2D;
+}
+
+.book-item-wrapper h1 {
+    color: #29528B;
+}
+
+.book-item-wrapper h3 {
+    margin: 30px;    
+}
+
+.books {
+    padding: 1rem;    
+    margin: auto;
+    width: 50rem;    
+    max-width: 95%; 
+    align-items: center;   
+}
+
+.btn-details {
+    color: #5992B7;
+    font-weight: bolder;    
+    background-color: white;    
+    width: auto;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #895D67;
+    border-radius: 10px;    
+}
+
+.btn-details:hover {
+    cursor: pointer;
+    color: #29528B;
+    background-color: #F2AF81;
+    border-color: #203973;
+}

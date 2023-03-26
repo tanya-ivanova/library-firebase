@@ -1,0 +1,81 @@
+.book-item-wrapper {
+  padding-top: 20px;
+  padding-bottom: 20px;  
+  display: inline-block;
+  color: #a52d2d;  
+}
+
+.book-item-wrapper-my-books {
+  color: #a52d2d;
+}
+
+.book-item-wrapper h1,
+.book-item-wrapper-my-books h1 {
+  color: #29528b;
+}
+
+.book-item-wrapper h1,
+h2,
+h3,
+p {
+  margin: 10px;
+}
+
+.book-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;  
+}
+
+.book-details-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.title,
+.author,
+.genre,
+.summary {
+    width: 500px;
+    height: 100px;
+}
+
+.google-book-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-flow: column-reverse;
+  justify-content: flex-start;
+}
+
+.btn-details,
+.btn-add {
+  color: #5992b7;
+  font-weight: bolder;
+  background-color: white;
+  width: auto;
+  padding: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #895d67;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.btn-details:hover,
+.btn-add:hover {
+  cursor: pointer;
+  color: #29528b;
+  background-color: #f2af81;
+  border-color: #203973;
+}

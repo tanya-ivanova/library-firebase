@@ -1,0 +1,11 @@
+.likes {
+    display: block;
+    font-size: 28px;
+    text-transform: uppercase;
+    padding-top: 20px;       
+}
+
+.likes p {
+    font-size: 12px;
+    margin-bottom: 10px;
+}

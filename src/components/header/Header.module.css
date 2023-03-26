@@ -18,6 +18,10 @@ header h1 {
   cursor: pointer;
 }
 
+header a { 
+  color: #7209b7; 
+}
+
 nav a:hover {
   cursor: pointer;
   color: #5992b7;

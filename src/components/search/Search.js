@@ -58,9 +58,10 @@ const Search = () => {
     }, [queryAll, queryUrl]);
 
     useEffect(() => {
-        //setSearchResults([]);
+        setSearchResults([]);
+        
         if (queryUrl && searchBy) {
-
+            setIsLoading(true);
             const booksRef = collection(db, "books");
             let qLimited;
             if(searchBy === 'author') {
@@ -114,12 +115,8 @@ const Search = () => {
     }
 
     const onSearch = (e) => {
-        e.preventDefault();
-        setSearchResults([]);
-        navigate(`/search?query=${search}?searchBy=${criteria}`);
-        if (queryUrl) {
-            setIsLoading(true);
-        }
+        e.preventDefault();        
+        navigate(`/search?query=${search}?searchBy=${criteria}`);        
     };
 
     const fetchMore = () => {

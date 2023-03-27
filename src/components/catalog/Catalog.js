@@ -39,6 +39,12 @@ const Catalog = () => {
                     setTheVeryFirstDoc(theVeryFirstDoc);
                     const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
                     setLastDoc(lastDoc);
+
+                    if (querySnapshot.size < 6) {
+                        setIsEmpty(true);
+                    } else {
+                        setIsEmpty(false);
+                    }
                 } else {
                     setIsEmpty(true);
                 }

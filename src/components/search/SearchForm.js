@@ -22,8 +22,7 @@ const SearchForm = ({
                     <span>{languages.searchBy[language]}: </span>
                     <select name="criteria" value={criteria} onChange={onSearchCriteriaChange} >
                         <option value="title">{languages.title[language]}</option>
-                        <option value="author">{languages.author[language]}</option>
-                        {showOptionGenre && <option value="genre">{languages.genre[language]}</option>}
+                        <option value="author">{languages.author[language]}</option>                        
                     </select>
                 </div>
 

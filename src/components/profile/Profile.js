@@ -31,8 +31,8 @@ const Profile = () => {
         const q = query(booksRef, where("_ownerId", "==", user._id), orderBy('title'), limit(6));
         getDocs(q)
             .then((querySnapshot) => {
-                if (querySnapshot.size !== 0) {
-                    setIsLoading(false);
+                setIsLoading(false);
+                if (querySnapshot.size !== 0) {                    
                     const books = querySnapshot.docs.map(book => ({ ...book.data(), _id: book.id }));
                     setBooks(books);
 

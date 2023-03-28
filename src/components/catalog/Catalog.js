@@ -30,8 +30,8 @@ const Catalog = () => {
         const qLimited = query(booksRef, orderBy('title'), limit(6));
         getDocs(qLimited)
             .then((querySnapshot) => {
-                if (querySnapshot.size !== 0) {
-                    setIsLoading(false);
+                setIsLoading(false);
+                if (querySnapshot.size !== 0) {                    
                     const books = querySnapshot.docs.map(book => ({ ...book.data(), _id: book.id }));
                     setBooks(books);
 
@@ -48,7 +48,6 @@ const Catalog = () => {
                 } else {
                     setIsEmpty(true);
                 }
-
             })
             .catch(err => {
                 console.log(err);

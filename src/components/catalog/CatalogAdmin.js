@@ -34,7 +34,6 @@ const CatalogAdmin = () => {
             .then((querySnapshot) => {
                 setIsLoading(false);
                 if (querySnapshot.size !== 0) {
-
                     const books = querySnapshot.docs.map(book => ({ ...book.data(), _id: book.id }));
                     setBooks(books);
 

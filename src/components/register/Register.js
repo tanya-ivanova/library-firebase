@@ -8,11 +8,12 @@ import { LanguageContext } from "../../contexts/LanguageContext";
 import {languages} from '../../languages/languages';
 
 import Notification from "../common/notification/Notification";
+import Backdrop from '../common/backdrop/Backdrop';
+import ModalError from "../common/modal/ModalError";
 
 import { firebaseApp } from "../../firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth(firebaseApp);
-
 
 const Register = () => {
     const {language} = useContext(LanguageContext);
@@ -23,6 +24,9 @@ const Register = () => {
 
     const [showNotification, setShowNotification] = useState(true);
     const [showPassNotification, setShowPassNotification] = useState(false);
+
+    const [showModalError, setShowModalError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [errors, setErrors] = useState({});
 
@@ -74,6 +78,9 @@ const Register = () => {
 
     const isFormValid = !Object.values(errors).some(x => x);
 
+    const onClickOk = () => {
+        setShowModalError(false);
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();            
@@ -91,7 +98,8 @@ const Register = () => {
                 
             })
             .catch((error) => {
-                alert(error.message);
+                setShowModalError(true);
+                setErrorMessage(error.message);
                 navigate('/register');
                 setValues({
                     email: '',
@@ -107,6 +115,9 @@ const Register = () => {
             { showNotification ? <Notification message={languages.allFieldsRequired[language]} /> : null }
             { showPassNotification ? <Notification message={languages.passwordsDontMatch[language]} /> : null }
 
+            {showModalError && <Backdrop onClick={onClickOk} />}
+            {showModalError && <ModalError errorMessage={errorMessage} onClickOk={onClickOk} />}
+            
             <div className={styles["register-wrapper"]}>
                 <form className={styles["register-form"]} onSubmit={onSubmit}>
 

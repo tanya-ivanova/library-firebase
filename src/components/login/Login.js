@@ -8,6 +8,8 @@ import { LanguageContext } from "../../contexts/LanguageContext";
 import {languages} from '../../languages/languages';
 
 import Notification from "../common/notification/Notification";
+import Backdrop from '../common/backdrop/Backdrop';
+import ModalError from "../common/modal/ModalError";
 
 import { firebaseApp } from "../../firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -21,6 +23,9 @@ const Login = () => {
     const navigate = useNavigate();
 
     const [showNotification, setShowNotification] = useState(true);
+
+    const [showModalError, setShowModalError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [values, setValues] = useState({
         email: '',
@@ -42,6 +47,10 @@ const Login = () => {
         }))
     };
 
+    const onClickOk = () => {
+        setShowModalError(false);
+    }
+
     const onSubmit = (e) => {
         e.preventDefault();     
      
@@ -55,11 +64,11 @@ const Login = () => {
                 };
                 
                 userLogin(authData);
-                navigate('/');
-                
+                navigate('/');                
             })
             .catch((error) => {
-                alert(error.message);
+                setShowModalError(true);
+                setErrorMessage(error.message);
                 navigate('/login');
                 setValues({
                     email: '',
@@ -71,6 +80,9 @@ const Login = () => {
     return (
         <section className={styles.login}>
             {showNotification ? <Notification message={languages.allFieldsRequired[language]} /> : null}
+
+            {showModalError && <Backdrop onClick={onClickOk} />}
+            {showModalError && <ModalError errorMessage={errorMessage} onClickOk={onClickOk} />}
 
             <div className={styles["login-wrapper"]}>
                 <form className={styles["login-form"]} onSubmit={onSubmit}>

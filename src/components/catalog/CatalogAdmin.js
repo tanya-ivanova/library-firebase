@@ -5,8 +5,6 @@ import BookItemAdmin from './bookItem/BookItemAdmin';
 import Spinner from '../common/spinner/Spinner';
 
 import styles from './CatalogAdmin.module.css';
-import { AuthContext } from '../../contexts/AuthContext';
-import { isUserAdmin } from '../../utils/utils';
 
 import { firebaseApp } from '../../firebase';
 import { getFirestore, collection, getDocs, query, limit, orderBy, doc, deleteDoc } from "firebase/firestore";
@@ -14,9 +12,7 @@ const db = getFirestore(firebaseApp);
 
 const CatalogAdmin = () => {
 
-    const { language } = useContext(LanguageContext);
-
-    const { user } = useContext(AuthContext);
+    const { language } = useContext(LanguageContext);    
 
     const [books, setBooks] = useState([]);
 

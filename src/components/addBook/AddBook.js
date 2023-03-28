@@ -5,14 +5,16 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { languages } from '../../languages/languages';
 import * as bookService from '../../services/bookService';
+
 import Notification from "../common/notification/Notification";
+import Backdrop from '../common/backdrop/Backdrop';
+import ModalError from "../common/modal/ModalError";
 
 import styles from './AddBook.module.css';
 
 import { firebaseApp } from '../../firebase';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
-
 
 const AddBook = () => {
     const navigate = useNavigate();
@@ -22,6 +24,9 @@ const AddBook = () => {
     const { language } = useContext(LanguageContext);
 
     const [showNotification, setShowNotification] = useState(true);
+
+    const [showModalError, setShowModalError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [errors, setErrors] = useState({});
 
@@ -99,6 +104,9 @@ const AddBook = () => {
 
     const isFormValid = !Object.values(errors).some(x => x);
 
+    const onClickOk = () => {
+        setShowModalError(false);
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -128,9 +136,10 @@ const AddBook = () => {
 
             navigate(`/catalog`);
 
-        } catch (err) {
+        } catch (err) {            
+            setShowModalError(true);
+            setErrorMessage(err.message);
             console.error("Error adding document: ", err);
-            alert(err.message);
         }
     };
 
@@ -149,6 +158,9 @@ const AddBook = () => {
         <section className={styles["add-book-page"]}>
             {showNotification ? <Notification message={languages.allFieldsRequired[language]} /> : null}
 
+            {showModalError && <Backdrop onClick={onClickOk} />}
+            {showModalError && <ModalError errorMessage={errorMessage} onClickOk={onClickOk} />}
+            
             <div className={styles["add-book-wrapper"]}>
                 <form className={styles["add-book-form"]} onSubmit={onSubmit} >
 

@@ -10,12 +10,14 @@ const Comment = ({
     comments,
     isOwner,
     isAdmin,
+    commentValue,
+    changeCommentValueHandler,
     addCommentHandler
 }) => {
     const { user } = useContext(AuthContext);
     const { language } = useContext(LanguageContext);
-    
-    return (        
+
+    return (
         <div className={styles["comments-part"]}>
             <div className={styles.comments}>
                 <h1>{languages.comments[language]}:</h1>
@@ -35,7 +37,12 @@ const Comment = ({
                 ? <div className={styles["add-comment"]}>
                     <h2>{languages.addComment[language]}:</h2>
                     <form onSubmit={addCommentHandler}>
-                        <textarea name="comment" placeholder={languages.pleaseWriteYourComment[language]} />
+                        <textarea
+                            name="comment"
+                            placeholder={languages.pleaseWriteYourComment[language]}
+                            value={commentValue}
+                            onChange={changeCommentValueHandler}
+                        />
                         <input className={styles["btn-add-comment"]} type="submit" value={languages.addComment[language]} />
                     </form>
                 </div>

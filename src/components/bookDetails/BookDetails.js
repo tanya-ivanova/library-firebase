@@ -35,6 +35,8 @@ const BookDetails = () => {
     const [isLiked, setIsLiked] = useState();
     const [comments, setComments] = useState([]);
 
+    const [commentValue, setCommentValue] = useState('');
+
     useEffect(() => {       
 
         const docRef = doc(db, "books", bookId);
@@ -147,17 +149,17 @@ const BookDetails = () => {
         }
     };
 
+    const changeCommentValueHandler = (e) => {
+        setCommentValue(e.target.value);
+    };
+
     const addCommentHandler = async (e) => {
         e.preventDefault();
-
-        const formData = new FormData(e.target);
-
-        let comment = formData.get('comment');       
-
+        
         try {
             await addDoc(collection(db, "comments"), {
                 bookId,
-                text: comment,
+                text: commentValue,
                 user
             });
 
@@ -166,7 +168,7 @@ const BookDetails = () => {
                     ...state,
                     {
                         bookId,
-                        text: comment,
+                        text: commentValue,
                         user
                     }
                 ];
@@ -177,7 +179,7 @@ const BookDetails = () => {
             console.log(err);
         }
 
-        e.target.reset();
+        setCommentValue('');
     };
 
     let authorForSearch;
@@ -231,6 +233,8 @@ const BookDetails = () => {
                     comments={comments}
                     isOwner={isOwner}
                     isAdmin={isAdmin}
+                    commentValue={commentValue}
+                    changeCommentValueHandler={changeCommentValueHandler}
                     addCommentHandler={addCommentHandler}
                 />
             </div>

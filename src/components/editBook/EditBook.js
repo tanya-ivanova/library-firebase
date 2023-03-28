@@ -8,6 +8,7 @@ import styles from './EditBook.module.css';
 
 import { firebaseApp } from '../../firebase';
 import { getFirestore, doc, getDoc, runTransaction } from "firebase/firestore";
+import { isUserAdmin } from "../../utils/utils";
 const db = getFirestore(firebaseApp);
 
 const EditBook = () => {
@@ -64,7 +65,9 @@ const EditBook = () => {
         )
     }
 
-    if (!isOwner) {
+    const isAdmin = isUserAdmin(user);
+
+    if(!isAdmin && !isOwner) {
         throw new Error('You are not authorized');
     }
 
@@ -101,7 +104,6 @@ const EditBook = () => {
     };
 
     const isFormValid = !Object.values(errors).some(x => x);
-
 
     const onSubmit = async (e) => {
         e.preventDefault();

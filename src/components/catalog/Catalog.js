@@ -16,7 +16,7 @@ const Catalog = () => {
     const { language } = useContext(LanguageContext);
 
     const [books, setBooks] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);    
+    const [isLoading, setIsLoading] = useState(true);
 
     const [lastDoc, setLastDoc] = useState();
     const [firstDoc, setFirstDoc] = useState();

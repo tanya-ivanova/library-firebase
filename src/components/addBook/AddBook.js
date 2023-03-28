@@ -105,6 +105,7 @@ const AddBook = () => {
 
         const bookData = {
             _ownerId: user._id,
+            ownerEmail: user.email,
             title: values.title,
             author: values.author,
             genre: values.genre,

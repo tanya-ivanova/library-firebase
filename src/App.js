@@ -13,6 +13,7 @@ import Login from './components/login/Login';
 import Logout from './components/logout/Logout';
 import AddBook from './components/addBook/AddBook';
 import Catalog from './components/catalog/Catalog';
+import CatalogAdmin from './components/catalog/CatalogAdmin';
 import Profile from './components/profile/Profile';
 import BookDetails from './components/bookDetails/BookDetails';
 import EditBook from './components/editBook/EditBook';
@@ -41,15 +42,15 @@ function App() {
                                 <Route path="/catalog/:bookId/details" element={<BookDetails />} />
 
                                 <Route element={<PrivateRoute />}>
+                                    <Route path="/catalog-admin" element={<CatalogAdmin />} />
                                     <Route path='/logout' element={<Logout />} />
                                     <Route path="/create" element={<AddBook />} />
                                     <Route path="/:googleBookId/create" element={<AddBook />} />
+                                    <Route path="/catalog/:bookId/edit" element={<EditBook />} />
                                     <Route path="/profile" element={<Profile />} />
                                     <Route path="/search" element={<Search />} />
                                     <Route path="/searchInGoogle" element={<SearchInGoogle />} />
                                 </Route>
-
-                                <Route path="/catalog/:bookId/edit" element={<EditBook />} />
 
                                 <Route path="*" element={<NotFound />} />
                             </Routes>

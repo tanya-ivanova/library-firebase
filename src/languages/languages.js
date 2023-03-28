@@ -302,5 +302,25 @@ export const languages = {
     searchForMoreBooks: {
         bulgarian: 'За още книги от този автор, моля, натиснете',
         english: 'For more books by this author, click'
-    }
+    },
+    outOf: {
+        bulgarian: 'от',
+        english: 'out of'
+    },
+    records: {
+        bulgarian: 'записа',
+        english: 'records'
+    },
+    ownerEmail: {
+        bulgarian: 'Имейл на създателя',
+        english: 'Owner email'
+    },
+    actions: {
+        bulgarian: 'Действия',
+        english: 'Actions'
+    },
+    moreRecords: {
+        bulgarian: 'Още записи',
+        english: 'More records'
+    },
 }

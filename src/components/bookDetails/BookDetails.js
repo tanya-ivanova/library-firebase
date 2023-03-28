@@ -15,6 +15,7 @@ import styles from './BookDetails.module.css';
 
 import { firebaseApp } from '../../firebase';
 import { getFirestore, doc, getDoc, collection, addDoc, deleteDoc, query, where, getDocs } from "firebase/firestore";
+import { isUserAdmin } from "../../utils/utils";
 const db = getFirestore(firebaseApp);
 
 
@@ -103,7 +104,8 @@ const BookDetails = () => {
     }
 
     const isOwner = user._id && user._id === currentBook._ownerId;
-    const showLikeButton = user._id !== undefined && isOwner === false && isLiked === 0;
+    const isAdmin = isUserAdmin(user);
+    const showLikeButton = user._id !== undefined && isOwner === false && isAdmin === false && isLiked === 0;
 
     const showModalHandler = () => {
         setShowModal(true);
@@ -116,7 +118,11 @@ const BookDetails = () => {
     const bookDeleteHandler = async () => {        
         try {
             await deleteDoc(doc(db, "books", bookId));
-            navigate('/catalog');
+            if(isAdmin) {
+                navigate('/catalog-admin');
+            } else {
+                navigate('/catalog');
+            }
 
         } catch (err) {
             alert(err.message);
@@ -202,7 +208,7 @@ const BookDetails = () => {
 
                     <Like totalLikes={totalLikes} isLiked={isLiked} />
 
-                    {isOwner
+                    {isOwner || isAdmin
                         ? <div className={styles.buttons}>
                             <Link className={styles["btn-edit"]} to={`/catalog/${currentBook._id}/edit`}>{languages.edit[language]}</Link>
                             <button onClick={showModalHandler} className={styles["btn-delete"]}>{languages.delete[language]}</button>
@@ -224,6 +230,7 @@ const BookDetails = () => {
                 <Comment
                     comments={comments}
                     isOwner={isOwner}
+                    isAdmin={isAdmin}
                     addCommentHandler={addCommentHandler}
                 />
             </div>

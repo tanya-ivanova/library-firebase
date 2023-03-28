@@ -1,0 +1,53 @@
+.catalog-admin {
+    background-color: antiquewhite;
+    color: #A52D2D;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;  
+    justify-content: center;  
+    padding: 20px;
+}
+
+.table-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;  
+    justify-content: center;
+    width: 90%;
+}
+
+table {
+    width: 100%;
+}
+
+table,
+th,
+td {
+  border: 2px solid #895D67;;
+}
+
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table,
+th,
+td {
+  padding: 10px;
+}
+
+.table-id {
+  width: 150px;
+}
+
+.table-title {
+  width: 200px;
+}
+
+.number-records {
+  font-weight: bolder;
+  color: #29528B;
+}

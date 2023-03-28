@@ -9,6 +9,7 @@ import styles from './Comment.module.css';
 const Comment = ({
     comments,
     isOwner,
+    isAdmin,
     addCommentHandler
 }) => {
     const { user } = useContext(AuthContext);
@@ -30,7 +31,7 @@ const Comment = ({
                 }
             </div>
 
-            {!isOwner && user._id
+            {user._id && !isOwner && !isAdmin
                 ? <div className={styles["add-comment"]}>
                     <h2>{languages.addComment[language]}:</h2>
                     <form onSubmit={addCommentHandler}>

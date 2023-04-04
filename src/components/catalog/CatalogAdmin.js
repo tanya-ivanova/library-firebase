@@ -6,6 +6,8 @@ import Spinner from '../common/spinner/Spinner';
 
 import styles from './CatalogAdmin.module.css';
 
+import { pageSize } from '../../constants';
+
 import { firebaseApp } from '../../firebase';
 import { getFirestore, collection, getDocs, query, limit, orderBy, doc, deleteDoc, startAfter } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
@@ -20,7 +22,7 @@ const CatalogAdmin = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [lastDoc, setLastDoc] = useState();
-    const [recordsToBeDisplayed, setRecordsToBeDisplayed] = useState(6);
+    const [recordsToBeDisplayed, setRecordsToBeDisplayed] = useState(pageSize);
     const [totalRecords, setTotalRecords] = useState(0);
     
     const [showTitleArrowDown, setTitleShowArrowDown] = useState(false);
@@ -64,10 +66,10 @@ const CatalogAdmin = () => {
         try {
             await deleteDoc(doc(db, "books", bookId));            
             setBooks(state => state.filter(x => x._id !== bookId));
-            setTotalRecords(state => state - 1);            /
+            setTotalRecords(state => state - 1);            
 
             const booksRef = collection(db, "books");
-
+            
             getDocs(booksRef)
             .then((booksSnapshot) => {
                 setTotalRecords(booksSnapshot.size);
@@ -93,7 +95,7 @@ const CatalogAdmin = () => {
     };
 
     const moreRecordsHandler = () => {
-        setRecordsToBeDisplayed(state => state + 6);
+        setRecordsToBeDisplayed(state => state + pageSize);
     };
 
     if (isLoading) {

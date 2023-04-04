@@ -9,10 +9,10 @@ const PagerFirebase = ({
     return (
         <div className={styles["pagination-section"]}>
             <div>
-                {!isBeginning && <button onClick={fetchLess}>Less books</button>}
+                {!isBeginning && <button onClick={fetchLess}>Prev books</button>}
             </div>
             <div>
-                {!isEmpty && <button onClick={fetchMore}>More books</button>}
+                {!isEmpty && <button onClick={fetchMore}>Next books</button>}
             </div>
         </div>
     );

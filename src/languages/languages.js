@@ -15,9 +15,37 @@ export const languages = {
         bulgarian: 'Моите книги',
         english: 'My books'
     },
+    add: {
+        bulgarian: 'Добави',
+        english: 'Add'
+    },
     addBook: {
         bulgarian: 'Добави книга',
         english: 'Add book'
+    },
+    addBookSingle: {
+        bulgarian: 'Една книга',
+        english: 'Single book'
+    },
+    addBooksFromExcel: {
+        bulgarian: 'Книги от Excel',
+        english: 'Books from Excel'
+    },
+    addBooksFromExcelTitle: {
+        bulgarian: 'Добавете книги от Excel файл',
+        english: 'Add books from Excel file'
+    },
+    addBooksFromExcelParagraph1: {
+        bulgarian: 'Можете да добавяте книги в приложението от Excel файл, което е много удобно, ако искате да добавите няколко книги едновременно.',
+        english: 'You can add books in the App from an Excel file which is very convinient if you want to add multiple books at the same time.'
+    },
+    addBooksFromExcelParagraph2: {
+        bulgarian: 'Електронната таблица в Excel трябва да бъде предварително попълнена с необходимата информация за книгите. Електронната таблица в Excel трябва да има следните колони: Заглавие, Автор, Жанр, URL адрес на изображение, Година, Резюме. Всички колони трябва да бъдат попълнени.',
+        english: 'The Excel spreadsheet has to be pre-filled with the required book information. The Excel spreadsheet must have the following columns: Title, Author, Genre, Image URL, Year, Summary. All columns must be filled.'
+    },
+    addBooksFromExcelChooseFile: {
+        bulgarian: 'Изберете Excel файла с информацията за книгите отдолу.',
+        english: 'Choose the Excel file with the books information from down below.'
     },
     search: {
         bulgarian: 'Търсене',
@@ -284,8 +312,8 @@ export const languages = {
         english: 'Please select'
     },
     lookingFor: {
-        bulgarian: 'Какво търсите',
-        english: 'What you are looking for?'
+        bulgarian: 'Какво търсите?',
+        english: 'What are you looking for?'
     },
     noResults: {
         bulgarian: 'Няма намерени резултати',
@@ -323,4 +351,24 @@ export const languages = {
         bulgarian: 'Още записи',
         english: 'More records'
     },
+    noBooksAdded: {
+        bulgarian: 'Няма добавени книги, тъй като при опит за добавяне на книгите от excel файла възникнаха следните грешки:',
+        english: 'No books were added because the following errors occurred while trying to add the books from the excel file:'
+    },
+    column: {
+        bulgarian: 'колона',
+        english: 'column'
+    },
+    row: {
+        bulgarian: 'ред',
+        english: 'row'
+    },
+    error: {
+        bulgarian: 'грешка',
+        english: 'error'
+    },
+    fixErrors: {
+        bulgarian: 'Моля, коригирайте тези грешки, преди да изпратите файла отново.',
+        english: 'Please fix these errors before sending the file again.'
+    }
 }

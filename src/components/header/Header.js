@@ -48,7 +48,15 @@ const Header = () => {
                                     {!isAdmin && (
                                         <>
                                             <li><Link to="/profile">{languages.myBooks[language]}</Link></li>
-                                            <li><Link to="/create">{languages.addBook[language]}</Link></li>
+
+                                            <li>
+                                                <Link>{languages.add[language]}</Link>
+                                                <ul>
+                                                    <li><Link to="/create">{languages.addBookSingle[language]}</Link></li>
+                                                    <li><Link to="/create-from-excel">{languages.addBooksFromExcel[language]}</Link></li>
+                                                </ul>
+                                            </li>
+
                                             <li>
                                                 <Link>{languages.search[language]}</Link>
                                                 <ul>

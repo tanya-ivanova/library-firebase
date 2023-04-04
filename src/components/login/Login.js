@@ -25,7 +25,7 @@ const Login = () => {
     const [showNotification, setShowNotification] = useState(true);
 
     const [showModalError, setShowModalError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState([]);
 
     const [values, setValues] = useState({
         email: '',
@@ -68,7 +68,7 @@ const Login = () => {
             })
             .catch((error) => {
                 setShowModalError(true);
-                setErrorMessage(error.message);
+                setErrorMessage(state => [...state, error.message]);
                 navigate('/login');
                 setValues({
                     email: '',

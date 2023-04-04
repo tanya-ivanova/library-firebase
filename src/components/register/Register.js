@@ -5,7 +5,7 @@ import styles from './Register.module.css';
 
 import { AuthContext } from "../../contexts/AuthContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
-import {languages} from '../../languages/languages';
+import { languages } from '../../languages/languages';
 
 import Notification from "../common/notification/Notification";
 import Backdrop from '../common/backdrop/Backdrop';
@@ -16,8 +16,8 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth(firebaseApp);
 
 const Register = () => {
-    const {language} = useContext(LanguageContext);
-    
+    const { language } = useContext(LanguageContext);
+
     const { userLogin } = useContext(AuthContext);
 
     const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Register = () => {
     const [showPassNotification, setShowPassNotification] = useState(false);
 
     const [showModalError, setShowModalError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState([]);
 
     const [errors, setErrors] = useState({});
 
@@ -42,15 +42,15 @@ const Register = () => {
         } else {
             setShowNotification(false);
         }
-      }, [values.email, values.password, values.confirmPassword])
+    }, [values.email, values.password, values.confirmPassword])
 
-      useEffect(() => {
+    useEffect(() => {
         if (values.password !== values.confirmPassword && values.confirmPassword) {
             setShowPassNotification(true);
         } else {
             setShowPassNotification(false);
         }
-      }, [values.password, values.confirmPassword])  
+    }, [values.password, values.confirmPassword])
 
 
     const changeValueHandler = (e) => {
@@ -83,10 +83,10 @@ const Register = () => {
     }
 
     const onSubmit = (e) => {
-        e.preventDefault();            
+        e.preventDefault();
 
         createUserWithEmailAndPassword(auth, values.email, values.password.trim())
-            .then((userCredential) => {                 
+            .then((userCredential) => {
                 const user = userCredential.user;
                 const authData = {
                     _id: user.uid,
@@ -95,11 +95,10 @@ const Register = () => {
                 };
                 userLogin(authData);
                 navigate('/');
-                
             })
             .catch((error) => {
                 setShowModalError(true);
-                setErrorMessage(error.message);
+                setErrorMessage(state => [...state, error.message]);
                 navigate('/register');
                 setValues({
                     email: '',
@@ -109,15 +108,14 @@ const Register = () => {
             });
     };
 
-    return (       
-
+    return (
         <section className={styles.register}>
-            { showNotification ? <Notification message={languages.allFieldsRequired[language]} /> : null }
-            { showPassNotification ? <Notification message={languages.passwordsDontMatch[language]} /> : null }
+            {showNotification ? <Notification message={languages.allFieldsRequired[language]} /> : null}
+            {showPassNotification ? <Notification message={languages.passwordsDontMatch[language]} /> : null}
 
             {showModalError && <Backdrop onClick={onClickOk} />}
             {showModalError && <ModalError errorMessage={errorMessage} onClickOk={onClickOk} />}
-            
+
             <div className={styles["register-wrapper"]}>
                 <form className={styles["register-form"]} onSubmit={onSubmit}>
 
@@ -156,19 +154,19 @@ const Register = () => {
                     }
 
                     <label htmlFor="confirm-register-password">{languages.reEnterPassword[language]}</label>
-                    <input 
-                        type="password" 
-                        name="confirmPassword" 
+                    <input
+                        type="password"
+                        name="confirmPassword"
                         id="confirm-register-password"
                         value={values.confirmPassword}
-                        onChange={changeValueHandler}                         
+                        onChange={changeValueHandler}
                     />
 
                     <div className={styles["btn-register"]}>
-                        <button 
-                            type="submit" 
-                            disabled={!isFormValid || showNotification || showPassNotification} 
-                            className={styles[`${!isFormValid || showNotification || showPassNotification ? 'button-disabled' : ''}`]} 
+                        <button
+                            type="submit"
+                            disabled={!isFormValid || showNotification || showPassNotification}
+                            className={styles[`${!isFormValid || showNotification || showPassNotification ? 'button-disabled' : ''}`]}
                         >
                             {languages.register[language]}
                         </button>

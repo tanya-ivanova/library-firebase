@@ -1,0 +1,26 @@
+.add-book-excel-page {
+    background-color: antiquewhite;
+    padding: 20px;
+}
+
+.add-book-excel-title {
+    margin-top: 0;
+    color: #A52D2D;
+}
+
+.add-book-excel-explanation {
+    color: #895D67;
+    font-weight: bolder;
+    width: 720px;
+    padding-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+.add-book-excel-chooseFileParagraph {
+    color: #29528B;
+}
+
+.add-book-excel-page input {
+    color: #29528B;
+    font-size: 16px;
+}

@@ -7,7 +7,7 @@ import Spinner from '../common/spinner/Spinner';
 import styles from './CatalogAdmin.module.css';
 
 import { firebaseApp } from '../../firebase';
-import { getFirestore, collection, getDocs, query, limit, orderBy, doc, deleteDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, limit, orderBy, doc, deleteDoc, startAfter } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 
 const CatalogAdmin = () => {
@@ -19,6 +19,7 @@ const CatalogAdmin = () => {
     const [isEmpty, setIsEmpty] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
+    const [lastDoc, setLastDoc] = useState();
     const [recordsToBeDisplayed, setRecordsToBeDisplayed] = useState(6);
     const [totalRecords, setTotalRecords] = useState(0);
     
@@ -42,6 +43,9 @@ const CatalogAdmin = () => {
                     const books = querySnapshot.docs.map(book => ({ ...book.data(), _id: book.id }));
                     setBooks(books);
 
+                    const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+                    setLastDoc(lastDoc);
+
                     if (querySnapshot.size === totalRecords) {
                         setIsEmpty(true);
                     }  
@@ -60,8 +64,28 @@ const CatalogAdmin = () => {
         try {
             await deleteDoc(doc(db, "books", bookId));            
             setBooks(state => state.filter(x => x._id !== bookId));
-            setRecordsToBeDisplayed(state => state - 1);
+            setTotalRecords(state => state - 1);            /
 
+            const booksRef = collection(db, "books");
+
+            getDocs(booksRef)
+            .then((booksSnapshot) => {
+                setTotalRecords(booksSnapshot.size);
+            });
+
+            const qLimited = query(booksRef, orderBy('title'), startAfter(lastDoc), limit(1));
+            getDocs(qLimited)
+                .then((querySnapshot) => {
+                    if (querySnapshot.size !== 0) {                        
+                        const books = querySnapshot.docs.map(book => ({ ...book.data(), _id: book.id }));
+                        setBooks(state => [...state, ...books]);
+    
+                        const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];                       
+                        setLastDoc(lastDoc);                      
+                    } else {
+                        setIsEmpty(true);
+                    }
+                })
         } catch (err) {
             alert(err.message);
             console.log(err);

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { languages } from '../../languages/languages';
+import { useValidateForm } from '../../hooks/useValidateForm';
 import Backdrop from "../common/backdrop/Backdrop";
 import ModalError from "../common/modal/ModalError";
 import Notification from "../common/notification/Notification";
@@ -29,8 +30,6 @@ const EditBook = () => {
     const [errorMessage, setErrorMessage] = useState([]);
 
     const [showNotification, setShowNotification] = useState(true);
-
-    const [errors, setErrors] = useState({});
 
     const [values, setValues] = useState({
         title: '',
@@ -73,6 +72,8 @@ const EditBook = () => {
         }
     }, [values.title, values.author, values.genre, values.imageUrl, values.year, values.summary])
 
+    const {minLength, isPositive, isValidUrl, isFormValid, errors} = useValidateForm(values);
+
     if (isLoading) {
         return (
             <div className="spinner">
@@ -92,34 +93,7 @@ const EditBook = () => {
             ...state,
             [e.target.name]: e.target.value
         }))
-    };
-
-    const minLength = (e, bound) => {
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: values[e.target.name].length < bound
-        }));
-    };
-
-    const isPositive = (e) => {
-        let number = Number(e.target.value);
-
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: number < 0 || isNaN(number)
-        }));
-    };
-
-    const IMAGE_URL_PATTERN = /^https?:\/\/.+$/i;
-
-    const isValidUrl = (e) => {
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: !IMAGE_URL_PATTERN.test(e.target.value)
-        }));
-    };
-
-    const isFormValid = !Object.values(errors).some(x => x);
+    };    
 
     const onClickOk = () => {
         setShowModalError(false);

@@ -57,3 +57,7 @@
     background-color: #F2AF81;
     border-color: #203973;
 }
+
+.btn-delete-comment {
+    margin: 10px;
+}

@@ -55,7 +55,7 @@ const BookDetails = () => {
         const commentsQ = query(commentsRef, where("bookId", "==", bookId));
         getDocs(commentsQ)
             .then((querySnapshot) => {
-                const comments = querySnapshot.docs.map(comment => comment.data());
+                const comments = querySnapshot.docs.map(comment => ({...comment.data(), _id: comment.id}));
                 setComments(comments);                
             })
             .catch(() => {
@@ -132,8 +132,7 @@ const BookDetails = () => {
         }
     };
 
-    const bookLikeHandler = async () => {
-        
+    const bookLikeHandler = async () => {        
         try {
             await addDoc(collection(db, "likes"), {
                 bookId,
@@ -180,6 +179,20 @@ const BookDetails = () => {
         }
 
         setCommentValue('');
+    };
+
+    const deleteCommentHandler = (commentId) => {
+        if(!isAdmin) {
+            throw new Error('You are not authorized!');
+        }
+        
+        deleteDoc(doc(db, "comments", commentId))
+            .then(() => {
+                setComments(state => state.filter(x => x._id !== commentId));
+            })
+            .catch(err => {                
+                console.log(err);
+            });
     };
 
     let authorForSearch;
@@ -236,6 +249,7 @@ const BookDetails = () => {
                     commentValue={commentValue}
                     changeCommentValueHandler={changeCommentValueHandler}
                     addCommentHandler={addCommentHandler}
+                    deleteCommentHandler={deleteCommentHandler}
                 />
             </div>
         </section>

@@ -3,6 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../contexts/AuthContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { languages } from '../../languages/languages';
+import Backdrop from "../common/backdrop/Backdrop";
+import ModalError from "../common/modal/ModalError";
+import Notification from "../common/notification/Notification";
 import Spinner from "../common/spinner/Spinner";
 import styles from './EditBook.module.css';
 
@@ -22,6 +25,11 @@ const EditBook = () => {
 
     const [isOwner, setIsOwner] = useState(true);
 
+    const [showModalError, setShowModalError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState([]);
+
+    const [showNotification, setShowNotification] = useState(true);
+
     const [errors, setErrors] = useState({});
 
     const [values, setValues] = useState({
@@ -33,8 +41,7 @@ const EditBook = () => {
         summary: ''
     });
 
-    useEffect(() => {       
-
+    useEffect(() => {
         const docRef = doc(db, "books", bookId);
 
         getDoc(docRef)
@@ -57,6 +64,15 @@ const EditBook = () => {
             });
     }, [bookId, user._id]);
 
+    useEffect(() => {
+        if (values.title === '' || values.author === '' || values.genre === ''
+            || values.imageUrl === '' || values.year === '' || values.summary === '') {
+            setShowNotification(true);
+        } else {
+            setShowNotification(false);
+        }
+    }, [values.title, values.author, values.genre, values.imageUrl, values.year, values.summary])
+
     if (isLoading) {
         return (
             <div className="spinner">
@@ -67,7 +83,7 @@ const EditBook = () => {
 
     const isAdmin = isUserAdmin(user);
 
-    if(!isAdmin && !isOwner) {
+    if (!isAdmin && !isOwner) {
         throw new Error('You are not authorized');
     }
 
@@ -105,6 +121,10 @@ const EditBook = () => {
 
     const isFormValid = !Object.values(errors).some(x => x);
 
+    const onClickOk = () => {
+        setShowModalError(false);
+    }
+
     const onSubmit = async (e) => {
         e.preventDefault();
 
@@ -121,7 +141,7 @@ const EditBook = () => {
             || bookData.imageUrl === '' || bookData.year === '' || bookData.summary === '') {
             return alert('All fields are required!');
         }
-        
+
         const docRef = doc(db, "books", bookId);
         try {
             await runTransaction(db, async (transaction) => {
@@ -138,11 +158,12 @@ const EditBook = () => {
                     year: bookData.year,
                     summary: bookData.summary,
                 });
-            });            
+            });
 
         } catch (err) {
+            setShowModalError(true);
+            setErrorMessage(state => [...state, err.message]);
             console.log("Transaction failed: ", err);
-            alert(err.message);
         }
 
         navigate(`/catalog/${bookId}/details`);
@@ -154,6 +175,11 @@ const EditBook = () => {
 
     return (
         <section className={styles["edit-book-page"]}>
+            {showNotification && <Notification message={languages.allFieldsRequired[language]} />}
+
+            {showModalError && <Backdrop onClick={onClickOk} />}
+            {showModalError && <ModalError errorMessage={errorMessage} onClickOk={onClickOk} />}
+
             <div className={styles["edit-book-wrapper"]}>
                 <form className={styles["edit-book-form"]} onSubmit={onSubmit} >
 
@@ -245,6 +271,7 @@ const EditBook = () => {
                         value={values.summary}
                         onChange={changeValueHandler}
                         onBlur={(e) => minLength(e, 10)}
+                        rows="5"
                     />
 
                     {errors.summary &&

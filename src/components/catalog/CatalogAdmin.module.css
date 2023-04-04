@@ -51,3 +51,8 @@ td {
   font-weight: bolder;
   color: #29528B;
 }
+
+.button-arrow {
+  margin: 0 0 0 5px;
+  padding: 5px;
+}

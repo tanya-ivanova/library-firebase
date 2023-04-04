@@ -20,7 +20,12 @@ const CatalogAdmin = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [recordsToBeDisplayed, setRecordsToBeDisplayed] = useState(6);
-    const [totalRecords, setTotalRecords] = useState(0);    
+    const [totalRecords, setTotalRecords] = useState(0);
+    
+    const [showTitleArrowDown, setTitleShowArrowDown] = useState(false);
+    const [showTitleArrowUp, setTitleShowArrowUp] = useState(true);
+    const [showAuthorArrowDown, setAuthorShowArrowDown] = useState(true);
+    const [showAuthorArrowUp, setAuthorShowArrowUp] = useState(false);
 
     useEffect(() => {
         const booksRef = collection(db, "books");
@@ -75,6 +80,38 @@ const CatalogAdmin = () => {
         )
     }
 
+    const clickArrowDownHandler = (criteria) => {
+        setBooks(state => {
+            let newState = [...state];
+            newState.sort((a, b) => a[criteria].localeCompare(b[criteria]));
+            return newState;
+        });
+
+        if (criteria === 'title') {
+            setTitleShowArrowDown(false);
+            setTitleShowArrowUp(true);
+        } else if (criteria === 'author') {
+            setAuthorShowArrowDown(false);
+            setAuthorShowArrowUp(true);
+        }
+    }
+
+    const clickArrowUpHandler = (criteria) => {
+        setBooks(state => {
+            let newState = [...state];
+            newState.sort((a, b) => b[criteria].localeCompare(a[criteria]));
+            return newState;
+        });
+
+        if (criteria === 'title') {
+            setTitleShowArrowDown(true);
+            setTitleShowArrowUp(false);
+        } else if (criteria === 'author') {
+            setAuthorShowArrowDown(true);
+            setAuthorShowArrowUp(false);
+        }
+    };
+
     return (
         <section className={styles["catalog-admin"]}>
             <div className={styles["table-wrapper"]}>
@@ -82,8 +119,34 @@ const CatalogAdmin = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th className={styles["table-title"]}>{languages.title[language]}</th>
-                            <th>{languages.author[language]}</th>
+                        <th className={styles["table-title"]}>
+                                {languages.title[language]}
+                                {showTitleArrowDown &&
+                                    <button className={styles["button-arrow"]} onClick={() => clickArrowDownHandler('title')}>
+                                        <i className="fa-solid fa-arrow-down"></i>
+                                    </button>
+                                }
+                                {showTitleArrowUp &&
+                                    <button className={styles["button-arrow"]} onClick={() => clickArrowUpHandler('title')}>
+                                        <i className="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                }
+                            </th>
+
+                            <th>
+                                {languages.author[language]}
+                                {showAuthorArrowDown &&
+                                    <button className={styles["button-arrow"]} onClick={() => clickArrowDownHandler('author')}>
+                                        <i className="fa-solid fa-arrow-down"></i>
+                                    </button>
+                                }
+                                {showAuthorArrowUp &&
+                                    <button className={styles["button-arrow"]} onClick={() => clickArrowUpHandler('author')}>
+                                        <i className="fa-solid fa-arrow-up"></i>
+                                    </button>
+                                }
+                            </th>
+
                             <th>{languages.year[language]}</th>
                             <th className={styles["table-id"]}>Id</th>
                             <th>{languages.ownerEmail[language]}</th>

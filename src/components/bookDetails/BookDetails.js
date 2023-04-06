@@ -18,7 +18,6 @@ import { getFirestore, doc, getDoc, collection, addDoc, deleteDoc, query, where,
 import { isUserAdmin } from "../../utils/utils";
 const db = getFirestore(firebaseApp);
 
-
 const BookDetails = () => {
     const { language } = useContext(LanguageContext);
 
@@ -35,7 +34,9 @@ const BookDetails = () => {
     const [isLiked, setIsLiked] = useState();
     const [comments, setComments] = useState([]);
 
-    const [commentValue, setCommentValue] = useState('');
+    const [values, setValues] = useState({
+        comment: '',        
+    });
 
     useEffect(() => {       
 
@@ -149,7 +150,7 @@ const BookDetails = () => {
     };
 
     const changeCommentValueHandler = (e) => {
-        setCommentValue(e.target.value);
+        setValues({comment: e.target.value});
     };
 
     const addCommentHandler = async (e) => {
@@ -158,7 +159,7 @@ const BookDetails = () => {
         try {
             await addDoc(collection(db, "comments"), {
                 bookId,
-                text: commentValue,
+                text: values.comment,
                 user
             });
 
@@ -167,7 +168,7 @@ const BookDetails = () => {
                     ...state,
                     {
                         bookId,
-                        text: commentValue,
+                        text: values.comment,
                         user
                     }
                 ];
@@ -178,7 +179,7 @@ const BookDetails = () => {
             console.log(err);
         }
 
-        setCommentValue('');
+        setValues({comment: ''});
     };
 
     const deleteCommentHandler = (commentId) => {
@@ -246,7 +247,7 @@ const BookDetails = () => {
                     comments={comments}
                     isOwner={isOwner}
                     isAdmin={isAdmin}
-                    commentValue={commentValue}
+                    values={values}
                     changeCommentValueHandler={changeCommentValueHandler}
                     addCommentHandler={addCommentHandler}
                     deleteCommentHandler={deleteCommentHandler}

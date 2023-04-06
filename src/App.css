@@ -51,7 +51,44 @@ body {
     margin: 20px;
 }
 
+button {
+    color: #5992B7;
+    font-weight: bolder;
+    margin: 30px 20px;
+    background-color: white;    
+    width: auto;
+    padding: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #895D67;
+    border-radius: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 16px;
+}
+
+button:hover {
+    cursor: pointer;
+    color: #29528B;
+    background-color: #F2AF81;
+}
+
 textarea {
     resize: none;
     font-size: 18px;
- }
+}
+
+.error {
+    color: red;
+    border: 1px solid red;    
+    padding: 8px;    
+}
+
+.button-disabled {
+    background-color: #d4d4d4;
+}
+
+.button-disabled:hover {
+    background-color: #d4d4d4;
+    color: #5992B7;
+    cursor: default;
+}

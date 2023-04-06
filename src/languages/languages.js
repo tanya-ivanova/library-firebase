@@ -203,6 +203,10 @@ export const languages = {
         bulgarian: 'Резюмето трябва да е дълго поне 10 символа!',
         english: 'Summary should be at least 10 characters long!'
     },
+    commentErrorMessage: {
+        bulgarian: 'Коментарът трябва да е дълъг поне 3 символа!',
+        english: 'Comment should be at least 3 characters long!'
+    },
     cancel: {
         bulgarian: 'Отмени',
         english: 'Cancel'
@@ -288,8 +292,8 @@ export const languages = {
         english: 'Invalid email!'
     },
     passwordErrorMessage: {
-        bulgarian: 'Паролата трябва да е дълга поне 6 символа',
-        english: "Password should be at least 6 characters long!"
+        bulgarian: 'Паролата трябва да е дълга поне 5 символа',
+        english: "Password should be at least 5 characters long!"
     },
     reEnterPassword: {
         bulgarian: 'Въведи отново паролата',

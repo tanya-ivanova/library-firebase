@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
+import { AuthContext } from "../../../contexts/AuthContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
 import BookItem from "../catalog/bookItem/BookItem";
-import Spinner from "../common/spinner/Spinner";
-import PagerFirebase from "../common/pager/PagerFirebase";
+import Spinner from "../../common/spinner/Spinner";
+import PagerFirebase from "../../common/pager/PagerFirebase";
 import styles from './Profile.module.css';
 
-import { firebaseApp } from '../../firebase';
+import { firebaseApp } from '../../../firebase';
 import { getFirestore, collection, query, where, getDocs, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 

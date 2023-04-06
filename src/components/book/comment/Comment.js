@@ -1,9 +1,9 @@
 import { useContext } from "react";
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { useValidateForm } from "../../hooks/useValidateForm";
-import { languages } from '../../languages/languages';
+import { AuthContext } from "../../../contexts/AuthContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { useValidateForm } from "../../../hooks/useValidateForm";
+import { languages } from '../../../languages/languages';
 
 import styles from './Comment.module.css';
 

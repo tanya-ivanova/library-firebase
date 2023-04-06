@@ -1,15 +1,15 @@
 import { useState, useEffect, useContext } from "react";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
 
-import Spinner from "../common/spinner/Spinner";
-
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
+import PagerFirebase from "../../common/pager/PagerFirebase";
+import Spinner from "../../common/spinner/Spinner";
 import BookItem from "./bookItem/BookItem";
+
 import styles from './Catalog.module.css';
 
-import { firebaseApp } from '../../firebase';
+import { firebaseApp } from '../../../firebase';
 import { getFirestore, collection, getDocs, query, startAfter, endBefore, limit, orderBy, limitToLast } from "firebase/firestore";
-import PagerFirebase from "../common/pager/PagerFirebase";
 const db = getFirestore(firebaseApp);
 
 const Catalog = () => {

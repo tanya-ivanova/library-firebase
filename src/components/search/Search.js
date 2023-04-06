@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { languages } from '../../languages/languages';
-import BookItem from "../catalog/bookItem/BookItem";
+import BookItem from "../book/catalog/bookItem/BookItem";
 import Spinner from "../common/spinner/Spinner";
 import SearchForm from './SearchForm';
 import { PAGE_SIZE } from '../../constants';

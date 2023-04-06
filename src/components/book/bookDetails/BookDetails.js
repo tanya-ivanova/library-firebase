@@ -9,8 +9,8 @@ import { isUserAdmin } from "../../../utils/utils";
 import Spinner from "../../common/spinner/Spinner";
 import Backdrop from "../../common/backdrop/Backdrop";
 import Modal from "../../common/modal/Modal";
-import Like from "../../like/Like";
-import Comment from "../../comment/Comment";
+import Like from "../like/Like";
+import Comment from "../comment/Comment";
 
 import styles from './BookDetails.module.css';
 

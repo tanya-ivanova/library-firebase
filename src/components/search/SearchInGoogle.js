@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { languages } from '../../languages/languages';
 import * as bookService from '../../services/bookService';
-import BookItemGoogle from '../catalog/bookItem/BookItemGoogle';
+import BookItemGoogle from '../book/catalog/bookItem/BookItemGoogle';
 import Pager from "../common/pager/Pager";
 import Spinner from "../common/spinner/Spinner";
 import SearchForm from './SearchForm';

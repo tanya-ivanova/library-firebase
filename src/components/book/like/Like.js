@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
 import styles from './Like.module.css';
 
 const Like = ({

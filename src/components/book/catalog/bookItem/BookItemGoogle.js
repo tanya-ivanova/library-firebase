@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Link } from 'react-router-dom';
 
-import { LanguageContext } from "../../../contexts/LanguageContext";
-import { languages } from '../../../languages/languages';
-import Card from "../../common/card/Card";
+import { LanguageContext } from "../../../../contexts/LanguageContext";
+import { languages } from '../../../../languages/languages';
+import Card from "../../../common/card/Card";
 
 import styles from './BookItem.module.css';
 

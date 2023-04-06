@@ -1,14 +1,14 @@
 import { useState, useEffect, useContext } from 'react';
-import { LanguageContext } from '../../contexts/LanguageContext';
-import { languages } from '../../languages/languages';
+
+import { LanguageContext } from '../../../contexts/LanguageContext';
+import { languages } from '../../../languages/languages';
 import BookItemAdmin from './bookItem/BookItemAdmin';
-import Spinner from '../common/spinner/Spinner';
+import Spinner from '../../common/spinner/Spinner';
+import { PAGE_SIZE } from '../../../constants';
 
 import styles from './CatalogAdmin.module.css';
 
-import { PAGE_SIZE } from '../../constants';
-
-import { firebaseApp } from '../../firebase';
+import { firebaseApp } from '../../../firebase';
 import { getFirestore, collection, getDocs, query, limit, orderBy, doc, deleteDoc, startAfter } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
 

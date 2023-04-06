@@ -1,23 +1,25 @@
+import { AUTH_LOCAL_STORAGE } from '../constants';
+
 export const request = async (method, url, data, mode) => {
     try {
-        const user = localStorage.getItem('auth');
-        const auth = JSON.parse(user || '{}');        
+        const user = localStorage.getItem(AUTH_LOCAL_STORAGE);
+        const auth = JSON.parse(user || '{}');
 
         let headers = {};
 
-        if(auth.accessToken && !mode) {
-            headers['X-Authorization'] = auth.accessToken;        
+        if (auth.accessToken && !mode) {
+            headers['X-Authorization'] = auth.accessToken;
         }
 
-        if(mode) {            
+        if (mode) {
             headers['Content-type'] = 'application/json';
         }
 
         let buildRequest;
 
-        if(method === 'GET' && !mode) {
-            buildRequest = fetch(url, {headers});
-        } else if(method === 'GET' && mode) {
+        if (method === 'GET' && !mode) {
+            buildRequest = fetch(url, { headers });
+        } else if (method === 'GET' && mode) {
             buildRequest = fetch(url, {
                 mode,
                 headers
@@ -35,7 +37,7 @@ export const request = async (method, url, data, mode) => {
         }
 
         const response = await buildRequest;
-        
+
         if (response.ok === false) {
 
             if (response.status === 403) {
@@ -50,10 +52,10 @@ export const request = async (method, url, data, mode) => {
             return response;
         } else {
             const result = await response.json();
-            return result;            
-        }        
+            return result;
+        }
 
-    } catch (err) {        
+    } catch (err) {
         throw err;
     }
 };
@@ -61,5 +63,4 @@ export const request = async (method, url, data, mode) => {
 export const get = request.bind(null, 'GET');
 export const post = request.bind(null, 'POST');
 export const put = request.bind(null, 'PUT');
-export const patch = request.bind(null, 'PATCH');
 export const del = request.bind(null, 'DELETE');

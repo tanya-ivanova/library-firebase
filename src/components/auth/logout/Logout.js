@@ -1,9 +1,9 @@
 import { useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../../contexts/AuthContext";
 
-import { firebaseApp } from "../../firebase";
+import { firebaseApp } from "../../../firebase";
 import { getAuth } from "firebase/auth";
 const auth = getAuth(firebaseApp);
 

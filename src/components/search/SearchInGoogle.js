@@ -10,6 +10,7 @@ import Spinner from "../common/spinner/Spinner";
 import SearchForm from './SearchForm';
 
 import styles from './Search.module.css';
+import { modifyQueryForForm, modifySearchForRequest, parseQueryAll } from '../../utils/utils';
 
 const SearchInGoogle = () => {
     const { language } = useContext(LanguageContext);
@@ -28,27 +29,17 @@ const SearchInGoogle = () => {
     const location = useLocation();
 
     let queryAll = new URLSearchParams(location.search).get("query") || '';
-    let page = 1;
     let query;
     let searchBy;
+    let page = 1;
 
-    if (queryAll) {
-        query = queryAll.split('?')[0];
-
-        searchBy = queryAll.split('?')[1].split('=')[1];
-
-        if (queryAll.split('?')[2]) {
-            page = Number(queryAll.split('?')[2].split('=')[1]);
-        }
+    if(queryAll) {
+        ({query, searchBy, page} = parseQueryAll(queryAll, query, searchBy, page));
     }
 
     useEffect(() => {
-        let modifiedQueryForForm;
-        if(query && query.split('-').length > 1) {
-            modifiedQueryForForm = query.split('-').join(' ');
-        } else if(query && query.split('-').length === 1) {
-            modifiedQueryForForm = query;            
-        }
+        let modifiedQueryForForm = modifyQueryForForm(query);
+
         setSearch(modifiedQueryForForm || '');
         setCriteria(searchBy || 'title');
     }, [query, searchBy]);
@@ -87,12 +78,9 @@ const SearchInGoogle = () => {
 
     const onSearch = (e) => {
         e.preventDefault();
-        let modifiedSearchForRequest;
-        if(search.split(' ').length > 1) {
-            modifiedSearchForRequest = search.split(' ').join('-');
-        } else {
-            modifiedSearchForRequest = search;
-        }
+        
+        let modifiedSearchForRequest = modifySearchForRequest(search);
+
         navigate(`/searchInGoogle?query=${modifiedSearchForRequest}?searchBy=${criteria}`);
         if (query) {
             setIsLoading(true);

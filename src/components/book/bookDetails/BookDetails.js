@@ -2,20 +2,20 @@ import { useState, useEffect, useContext } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
-import Spinner from "../common/spinner/Spinner";
-import Backdrop from "../common/backdrop/Backdrop";
-import Modal from "../common/modal/Modal";
-import Like from "../like/Like";
-import Comment from "../comment/Comment";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
+import { isUserAdmin } from "../../../utils/utils";
+import Spinner from "../../common/spinner/Spinner";
+import Backdrop from "../../common/backdrop/Backdrop";
+import Modal from "../../common/modal/Modal";
+import Like from "../../like/Like";
+import Comment from "../../comment/Comment";
 
 import styles from './BookDetails.module.css';
 
-import { firebaseApp } from '../../firebase';
+import { firebaseApp } from '../../../firebase';
 import { getFirestore, doc, getDoc, collection, addDoc, deleteDoc, query, where, getDocs } from "firebase/firestore";
-import { isUserAdmin } from "../../utils/utils";
 const db = getFirestore(firebaseApp);
 
 const BookDetails = () => {

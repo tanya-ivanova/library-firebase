@@ -1,17 +1,18 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+
+import { AuthContext } from "../../../contexts/AuthContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
+import { useValidateForm } from "../../../hooks/useValidateForm";
+import Notification from "../../common/notification/Notification";
+import Backdrop from '../../common/backdrop/Backdrop';
+import ModalError from "../../common/modal/ModalError";
+
 import styles from './Register.module.css';
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
-
-import Notification from "../common/notification/Notification";
-import Backdrop from '../common/backdrop/Backdrop';
-import ModalError from "../common/modal/ModalError";
-
-import { firebaseApp } from "../../firebase";
+import { firebaseApp } from "../../../firebase";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth(firebaseApp);
 
@@ -27,8 +28,6 @@ const Register = () => {
 
     const [showModalError, setShowModalError] = useState(false);
     const [errorMessage, setErrorMessage] = useState([]);
-
-    const [errors, setErrors] = useState({});
 
     const [values, setValues] = useState({
         email: '',
@@ -52,31 +51,14 @@ const Register = () => {
         }
     }, [values.password, values.confirmPassword])
 
+    const {minLength, isValidEmail, isFormValid, errors} = useValidateForm(values);
 
     const changeValueHandler = (e) => {
         setValues(state => ({
             ...state,
             [e.target.name]: e.target.value
         }))
-    };
-
-    const minLength = (e, bound) => {
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: values[e.target.name].length < bound
-        }));
-    };
-
-    const EMAIL_PATTERN = /^[A-Za-z0-9]+@[a-z]+\.[a-z]+$/;
-
-    const isValidEmail = (e) => {
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: !EMAIL_PATTERN.test(e.target.value)
-        }));
-    };
-
-    const isFormValid = !Object.values(errors).some(x => x);
+    };  
 
     const onClickOk = () => {
         setShowModalError(false);

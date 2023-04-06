@@ -6,6 +6,7 @@ import { languages } from '../../languages/languages';
 import BookItem from "../catalog/bookItem/BookItem";
 import Spinner from "../common/spinner/Spinner";
 import SearchForm from './SearchForm';
+import { PAGE_SIZE } from '../../constants';
 
 import styles from './Search.module.css';
 
@@ -65,9 +66,9 @@ const Search = () => {
             const booksRef = collection(db, "books");
             let qLimited;
             if(searchBy === 'author') {
-                qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('title'), limit(6));
+                qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('title'), limit(PAGE_SIZE));
             } else if (searchBy === 'title') {
-                qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('author'), limit(6));
+                qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('author'), limit(PAGE_SIZE));
             }
             getDocs(qLimited)
                 .then((querySnapshot) => {
@@ -81,7 +82,7 @@ const Search = () => {
                         const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
                         setLastDoc(lastDoc);
 
-                        if (querySnapshot.size < 6) {
+                        if (querySnapshot.size < PAGE_SIZE) {
                             setIsEmpty(true);
                         } else {
                             setIsEmpty(false);
@@ -124,9 +125,9 @@ const Search = () => {
 
         let qLimited;
         if(searchBy === 'author') {
-            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('title'), startAfter(lastDoc), limit(6));
+            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('title'), startAfter(lastDoc), limit(PAGE_SIZE));
         } else if(searchBy === 'title') {
-            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('author'), startAfter(lastDoc), limit(6));
+            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('author'), startAfter(lastDoc), limit(PAGE_SIZE));
         }
         getDocs(qLimited)
             .then((querySnapshot) => {
@@ -161,9 +162,9 @@ const Search = () => {
 
         let qLimited;
         if(searchBy === 'author') {
-            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('title'), endBefore(firstDoc), limitToLast(6));
+            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('title'), endBefore(firstDoc), limitToLast(PAGE_SIZE));
         } else if(searchBy === 'title') {
-            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('author'), endBefore(firstDoc), limitToLast(6));
+            qLimited = query(booksRef, where(searchBy, "==", queryUrl), orderBy('author'), endBefore(firstDoc), limitToLast(PAGE_SIZE));
         }
         getDocs(qLimited)
             .then((querySnapshot) => {

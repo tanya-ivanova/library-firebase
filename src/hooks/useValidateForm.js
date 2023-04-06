@@ -1,13 +1,15 @@
 import { useState } from "react";
+
 import { IMAGE_URL_PATTERN } from "../constants";
+import { EMAIL_PATTERN } from '../constants';
 
 export const useValidateForm = (values) => {
     const [errors, setErrors] = useState({});
 
-    const minLength = (e, bound) => {
+    const minLength = (e, min) => {
         setErrors(state => ({
             ...state,
-            [e.target.name]: values[e.target.name].length < bound
+            [e.target.name]: values[e.target.name].length < min
         }));
     };
 
@@ -18,12 +20,19 @@ export const useValidateForm = (values) => {
             ...state,
             [e.target.name]: number < 0 || isNaN(number)
         }));
-    };    
+    };
 
     const isValidUrl = (e) => {
         setErrors(state => ({
             ...state,
             [e.target.name]: !IMAGE_URL_PATTERN.test(e.target.value)
+        }));
+    };
+
+    const isValidEmail = (e) => {
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: !EMAIL_PATTERN.test(e.target.value)
         }));
     };
 
@@ -33,6 +42,7 @@ export const useValidateForm = (values) => {
         minLength,
         isPositive,
         isValidUrl,
+        isValidEmail,
         isFormValid,
         errors
     }

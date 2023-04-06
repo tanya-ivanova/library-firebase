@@ -5,6 +5,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { isUserAdmin } from '../../utils/utils';
 import { languages } from '../../languages/languages';
+import { ENGLISH_LANGUAGE } from "../../constants";
+import { BULGARIAN_LANGUAGE } from "../../constants";
 
 import styles from './Header.module.css';
 
@@ -14,7 +16,7 @@ const Header = () => {
 
     const setLanguageFromHeaderButtons = (language) => {
         if (!Object.keys(languages.softuniLibrary).includes(language)) {
-            language = 'english';
+            language = ENGLISH_LANGUAGE;
         }
         setAppLanguage(language);
     };
@@ -29,8 +31,8 @@ const Header = () => {
                         <Link to="/" className={styles["softuni-library"]}>{languages.softuniLibrary[language]}</Link>
                     </h1>
 
-                    <button className={styles["button-bg"]} onClick={() => setLanguageFromHeaderButtons('bulgarian')}>BG</button>
-                    <button className={styles["button-en"]} onClick={() => setLanguageFromHeaderButtons('english')}>EN</button>
+                    <button className={styles["button-bg"]} onClick={() => setLanguageFromHeaderButtons(BULGARIAN_LANGUAGE)}>BG</button>
+                    <button className={styles["button-en"]} onClick={() => setLanguageFromHeaderButtons(ENGLISH_LANGUAGE)}>EN</button>
 
                     {user.email && <Link className={styles.greeting}>{languages.welcome[language]} {user.email}</Link>}
                 </div>

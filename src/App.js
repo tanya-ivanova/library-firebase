@@ -8,15 +8,15 @@ import PrivateRoute from './components/common/PrivateRoute';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
 import Footer from './components/footer/Footer';
-import Register from './components/register/Register';
-import Login from './components/login/Login';
-import Logout from './components/logout/Logout';
-import AddBook from './components/addBook/AddBook';
-import AddBookExcel from './components/addBook/AddBookExcel';
+import Register from './components/auth/register/Register';
+import Login from './components/auth/login/Login';
+import Logout from './components/auth/logout/Logout';
+import AddBook from './components/book/addBook/AddBook';
+import AddBookExcel from './components/book/addBook/AddBookExcel';
 import Catalog from './components/catalog/Catalog';
 import CatalogAdmin from './components/catalog/CatalogAdmin';
 import Profile from './components/profile/Profile';
-import BookDetails from './components/bookDetails/BookDetails';
+import BookDetails from './components/book/bookDetails/BookDetails';
 import EditBook from './components/editBook/EditBook';
 import Search from './components/search/Search';
 import SearchInGoogle from './components/search/SearchInGoogle';
@@ -42,8 +42,8 @@ function App() {
                                 <Route path="/catalog/:bookId/details" element={<BookDetails />} />
 
                                 <Route element={<PrivateRoute />}>
-                                    <Route path="/catalog-admin" element={<CatalogAdmin />} />
                                     <Route path='/logout' element={<Logout />} />
+                                    <Route path="/catalog-admin" element={<CatalogAdmin />} />
                                     <Route path="/create" element={<AddBook />} />
                                     <Route path="/create-from-excel" element={<AddBookExcel />} />
                                     <Route path="/:googleBookId/create" element={<AddBook />} />

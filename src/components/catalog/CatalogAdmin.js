@@ -6,7 +6,7 @@ import Spinner from '../common/spinner/Spinner';
 
 import styles from './CatalogAdmin.module.css';
 
-import { pageSize } from '../../constants';
+import { PAGE_SIZE } from '../../constants';
 
 import { firebaseApp } from '../../firebase';
 import { getFirestore, collection, getDocs, query, limit, orderBy, doc, deleteDoc, startAfter } from "firebase/firestore";
@@ -22,7 +22,7 @@ const CatalogAdmin = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [lastDoc, setLastDoc] = useState();
-    const [recordsToBeDisplayed, setRecordsToBeDisplayed] = useState(pageSize);
+    const [recordsToBeDisplayed, setRecordsToBeDisplayed] = useState(PAGE_SIZE);
     const [totalRecords, setTotalRecords] = useState(0);
     
     const [showTitleArrowDown, setTitleShowArrowDown] = useState(false);
@@ -95,7 +95,7 @@ const CatalogAdmin = () => {
     };
 
     const moreRecordsHandler = () => {
-        setRecordsToBeDisplayed(state => state + pageSize);
+        setRecordsToBeDisplayed(state => state + PAGE_SIZE);
     };
 
     if (isLoading) {

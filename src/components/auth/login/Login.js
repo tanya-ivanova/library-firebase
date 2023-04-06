@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import styles from './Login.module.css';
 
-import { AuthContext } from "../../contexts/AuthContext";
-import { LanguageContext } from "../../contexts/LanguageContext";
-import {languages} from '../../languages/languages';
+import { AuthContext } from "../../../contexts/AuthContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import {languages} from '../../../languages/languages';
 
-import Notification from "../common/notification/Notification";
-import Backdrop from '../common/backdrop/Backdrop';
-import ModalError from "../common/modal/ModalError";
+import Notification from "../../common/notification/Notification";
+import Backdrop from '../../common/backdrop/Backdrop';
+import ModalError from "../../common/modal/ModalError";
 
-import { firebaseApp } from "../../firebase";
+import { firebaseApp } from "../../../firebase";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const auth = getAuth(firebaseApp);
 

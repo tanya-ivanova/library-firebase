@@ -1,16 +1,16 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
-import * as bookService from '../../services/bookService';
-import BookItemGoogle from '../book/catalog/bookItem/BookItemGoogle';
-import Pager from "../common/pager/Pager";
-import Spinner from "../common/spinner/Spinner";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
+import * as bookService from '../../../services/bookService';
+import BookItemGoogle from '../catalog/bookItem/BookItemGoogle';
+import Pager from "../../common/pager/Pager";
+import Spinner from "../../common/spinner/Spinner";
 import SearchForm from './SearchForm';
+import { modifyQueryForForm, modifySearchForRequest, parseQueryAll } from '../../../utils/utils';
 
 import styles from './Search.module.css';
-import { modifyQueryForForm, modifySearchForRequest, parseQueryAll } from '../../utils/utils';
 
 const SearchInGoogle = () => {
     const { language } = useContext(LanguageContext);
@@ -46,7 +46,8 @@ const SearchInGoogle = () => {
 
     useEffect(() => {
         if (query && searchBy) {
-
+            setIsLoading(true);
+            
             bookService.searchInGoogleGetMany(searchBy, query, page)
                 .then(({ googleBooks, pages }) => {
                     setSearchResults(googleBooks.items || []);
@@ -81,10 +82,7 @@ const SearchInGoogle = () => {
         
         let modifiedSearchForRequest = modifySearchForRequest(search);
 
-        navigate(`/searchInGoogle?query=${modifiedSearchForRequest}?searchBy=${criteria}`);
-        if (query) {
-            setIsLoading(true);
-        }
+        navigate(`/searchInGoogle?query=${modifiedSearchForRequest}?searchBy=${criteria}`);       
     };
     
     return (

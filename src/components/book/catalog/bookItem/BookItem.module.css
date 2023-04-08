@@ -76,6 +76,5 @@ p {
 .btn-add:hover {
   cursor: pointer;
   color: #29528b;
-  background-color: #f2af81;
-  border-color: #203973;
+  background-color: #f2af81;  
 }

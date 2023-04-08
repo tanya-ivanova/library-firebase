@@ -18,8 +18,8 @@ import CatalogAdmin from './components/book/catalog/CatalogAdmin';
 import Profile from './components/book/profile/Profile';
 import BookDetails from './components/book/bookDetails/BookDetails';
 import EditBook from './components/book/editBook/EditBook';
-import Search from './components/search/Search';
-import SearchInGoogle from './components/search/SearchInGoogle';
+import Search from './components/book/search/Search';
+import SearchInGoogle from './components/book/search/SearchInGoogle';
 import NotFound from './components/notFound/NotFound';
 
 import './App.css';

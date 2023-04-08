@@ -5,7 +5,7 @@ import parse from 'html-react-parser';
 import { AuthContext } from "../../../contexts/AuthContext";
 import { LanguageContext } from "../../../contexts/LanguageContext";
 import { languages } from '../../../languages/languages';
-import { isUserAdmin } from "../../../utils/utils";
+import { isUserAdmin, modifySearchForRequest } from "../../../utils/utils";
 import Spinner from "../../common/spinner/Spinner";
 import Backdrop from "../../common/backdrop/Backdrop";
 import Modal from "../../common/modal/Modal";
@@ -196,12 +196,7 @@ const BookDetails = () => {
             });
     };
 
-    let authorForSearch;
-    if (currentBook.author.split(' ').length > 1) {
-        authorForSearch = currentBook.author.split(' ').join('-');
-    } else {
-        authorForSearch = currentBook.author;
-    }
+    let authorForSearch = modifySearchForRequest(currentBook.author);
 
     return (
         <section className={styles["details-page"]}>

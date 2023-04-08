@@ -5,16 +5,16 @@ import readXlsxFile from 'read-excel-file';
 import { AuthContext } from '../../../contexts/AuthContext';
 import { LanguageContext } from '../../../contexts/LanguageContext';
 import { languages } from '../../../languages/languages';
+import Spinner from '../../common/spinner/Spinner';
 import Backdrop from '../../common/backdrop/Backdrop';
 import ModalError from '../../common/modal/ModalError';
+import {IMAGE_URL_PATTERN} from '../../../constants';
 
 import styles from './AddBookExcel.module.css';
 
 import { firebaseApp } from '../../../firebase';
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 const db = getFirestore(firebaseApp);
-
-const IMAGE_URL_PATTERN = /^https?:\/\/.+$/i;
 
 const schema = {
     'Title': {
@@ -95,7 +95,11 @@ const AddBookExcel = () => {
     const [showModalError, setShowModalError] = useState(false);
     const [errorMessage, setErrorMessage] = useState([]);
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const getFile = (e) => {
+        setIsLoading(true);
+
         readXlsxFile(e.target.files[0], { schema })
             .then(({ rows, errors }) => {    
 
@@ -107,6 +111,7 @@ const AddBookExcel = () => {
                     });
 
                     setErrorMessage(state => [...state, languages.fixErrors[language]]);
+                    setIsLoading(false);
                     setShowModalError(true); 
                     e.target.value = '';                   
                 } else {
@@ -130,6 +135,14 @@ const AddBookExcel = () => {
     const onClickOk = () => {
         setShowModalError(false);
         setErrorMessage([]);
+    }
+
+    if (isLoading) {
+        return (
+            <div className="spinner">
+                <Spinner />
+            </div>
+        )
     }
 
     return (

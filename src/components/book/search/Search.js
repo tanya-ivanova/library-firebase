@@ -1,18 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { LanguageContext } from "../../contexts/LanguageContext";
-import { languages } from '../../languages/languages';
-import BookItem from "../book/catalog/bookItem/BookItem";
-import Spinner from "../common/spinner/Spinner";
+import { LanguageContext } from "../../../contexts/LanguageContext";
+import { languages } from '../../../languages/languages';
+import BookItem from "../catalog/bookItem/BookItem";
+import PagerFirebase from '../../common/pager/PagerFirebase';
+import Spinner from "../../common/spinner/Spinner";
 import SearchForm from './SearchForm';
-import { PAGE_SIZE } from '../../constants';
+import { PAGE_SIZE } from '../../../constants';
 
 import styles from './Search.module.css';
 
-import { firebaseApp } from '../../firebase';
+import { firebaseApp } from '../../../firebase';
 import { getFirestore, collection, query, where, getDocs, orderBy, limit, startAfter, endBefore, limitToLast } from "firebase/firestore";
-import PagerFirebase from '../common/pager/PagerFirebase';
 const db = getFirestore(firebaseApp);
 
 const Search = () => {
@@ -63,6 +63,7 @@ const Search = () => {
         
         if (queryUrl && searchBy) {
             setIsLoading(true);
+            
             const booksRef = collection(db, "books");
             let qLimited;
             if(searchBy === 'author') {
